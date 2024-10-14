@@ -15,7 +15,6 @@ public interface ItemDao extends JpaRepository<ItemEntity,String> {
 
     @Query("SELECT i.itemId FROM ItemEntity i ORDER BY i.itemId DESC")
     List<String> findLastItemId();
-
 }
 
 
