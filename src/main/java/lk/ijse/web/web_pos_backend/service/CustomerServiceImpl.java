@@ -26,17 +26,18 @@ public class CustomerServiceImpl implements CustomerService {
     @Autowired
     private Mapping mapping;
 
-
     //Save Customer
     public void saveCustomer(CustomerDTO customerDTO) {
-        customerDTO.setCustomerId(AppUtil.createCustomerID());
+        List<String> customerIds = customerDao.findLastCustomerId();
+        String lastCustomerId = customerIds.isEmpty() ? null : customerIds.get(0);
+        customerDTO.setCustomerId(AppUtil.generateNextCustomerId(lastCustomerId));
+
         var customerEntity = mapping.convertToCustomerEntity(customerDTO);
         var saveCustomer = customerDao.save(customerEntity);
         if (saveCustomer == null) {
             throw new DataPersistFailedException("Can't save customer");
         }
     }
-
 
     //Update Customer
     @Override

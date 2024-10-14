@@ -15,6 +15,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 
 import java.util.Arrays;
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/v1/items")
@@ -61,5 +62,11 @@ public class ItemController {
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
+    }
+
+    //Get All Item
+    @GetMapping(value = "allItems", produces = MediaType.APPLICATION_JSON_VALUE)
+    public List<ItemDTO> getAllItems() {
+        return itemService.getAllItems();
     }
 }
