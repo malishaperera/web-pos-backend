@@ -1,13 +1,13 @@
 package lk.ijse.web.web_pos_backend.entity;
 
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
+import java.util.ArrayList;
+import java.util.List;
 
 
 @Data
@@ -24,4 +24,10 @@ public class ItemEntity implements SuperEntity {
     private String itemCategory;
     @Column(columnDefinition = "LONGTEXT")
     private String itemImage;
+
+
+    // OneToMany relationship with OrderDetailsEntity
+    @OneToMany(mappedBy = "item", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<OrderDetailsEntity> orderDetails = new ArrayList<>();
+
 }

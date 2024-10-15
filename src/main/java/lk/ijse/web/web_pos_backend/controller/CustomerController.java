@@ -58,7 +58,7 @@ public class CustomerController {
                 return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
             }
             customerService.updateCustomer(customerId,customer);
-            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+            return new ResponseEntity<>(HttpStatus.CREATED);
         }catch (CustomerNotFoundException e){
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }catch (Exception e){

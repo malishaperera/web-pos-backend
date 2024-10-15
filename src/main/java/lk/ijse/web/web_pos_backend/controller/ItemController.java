@@ -18,7 +18,6 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.util.Arrays;
 import java.util.List;
-
 @RestController
 @RequestMapping("/api/v1/items")
 @RequiredArgsConstructor
@@ -41,54 +40,62 @@ public class ItemController {
             @RequestPart("itemCategory") String itemCategory,
             @RequestPart("itemImage") MultipartFile itemImage) {
 
-        // Handle profile pic
         try {
             byte[] imageByteCollection = itemImage.getBytes();
-            String base64ProfilePic = AppUtil.toBase64ProfilePic(Arrays.toString(imageByteCollection));
-            // build the user object
-            ItemDTO buildUserDTO = new ItemDTO();
-            buildUserDTO.setItemName(itemName);
-            buildUserDTO.setItemPrice(Integer.parseInt(itemPrice));
-            buildUserDTO.setItemQuantity(Integer.parseInt(itemQuantity));
-            buildUserDTO.setItemCategory(itemCategory);
-            buildUserDTO.setItemImage(base64ProfilePic);
+            String base64ProfilePic = AppUtil.toBase64ProfilePic(imageByteCollection);
+            ItemDTO buildItemDTO = new ItemDTO();
+            buildItemDTO.setItemName(itemName);
+            buildItemDTO.setItemPrice(Integer.parseInt(itemPrice));
+            buildItemDTO.setItemQuantity(Integer.parseInt(itemQuantity));
+            buildItemDTO.setItemCategory(itemCategory);
+            buildItemDTO.setItemImage(base64ProfilePic);
 
-            //send to the service layer
-            itemService.saveItem(buildUserDTO);
+            // Send to the service layer
+            itemService.saveItem(buildItemDTO);
 
             return new ResponseEntity<>(HttpStatus.CREATED);
         } catch (DataPersistFailedException e) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         } catch (Exception e) {
+            System.err.println("Error occurred while saving item: " + e.getMessage());
+            e.printStackTrace(); // Log the full stack trace for debugging
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
+
     }
 
     //Update Item
     @PatchMapping(value = "/{itemId}",consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<Void> updateItem(
-            @PathVariable("itemId") String  itemId,
+            @PathVariable("itemId") String itemId,
             @RequestPart("updateItemName") String updateItemName,
             @RequestPart("updateItemPrice") String updateItemPrice,
             @RequestPart("updateItemQuantity") String updateItemQuantity,
             @RequestPart("updateItemCategory") String updateItemCategory,
-            @RequestPart("updateItemImage") MultipartFile updateItemImage)
-    {
+            @RequestPart("updateItemImage") MultipartFile updateItemImage) {
         try {
-             byte[] useImage = updateItemImage.getBytes();
-             String base64ItemPic = AppUtil.toBase64ProfilePic(Arrays.toString(useImage));
-             var updateItem = new ItemDTO();
-             updateItem.setItemId(itemId);
-             updateItem.setItemName(updateItemName);
-             updateItem.setItemPrice(Integer.parseInt(updateItemPrice));
-             updateItem.setItemQuantity(Integer.parseInt(updateItemQuantity));
-             updateItem.setItemCategory(updateItemCategory);
-             updateItem.setItemImage(base64ItemPic);
-             itemService.updateItem(updateItem);
-             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-        }catch (ItemNotFoundException e){
+            // Get the image bytes and convert to Base64
+            byte[] imageBytes = updateItemImage.getBytes();
+            String base64ItemPic = AppUtil.toBase64ProfilePic(imageBytes);
+
+            // Create the DTO for the updated item
+            ItemDTO updateItem = new ItemDTO();
+            updateItem.setItemId(itemId);
+            updateItem.setItemName(updateItemName);
+            updateItem.setItemPrice(Integer.parseInt(updateItemPrice));
+            updateItem.setItemQuantity(Integer.parseInt(updateItemQuantity));
+            updateItem.setItemCategory(updateItemCategory);
+            updateItem.setItemImage(base64ItemPic);
+
+            // Call the service to update the item
+            itemService.updateItem(updateItem);
+
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        } catch (ItemNotFoundException e) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }catch (Exception e){
+        } catch (Exception e) {
+            System.err.println("Error occurred while updating item: " + e.getMessage());
+            e.printStackTrace(); // Log the full stack trace for debugging
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }

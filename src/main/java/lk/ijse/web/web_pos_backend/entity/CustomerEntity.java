@@ -1,12 +1,13 @@
 package lk.ijse.web.web_pos_backend.entity;
 
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Data
 @AllArgsConstructor
@@ -19,4 +20,25 @@ public class CustomerEntity implements SuperEntity{
     private String customerName;
     private String customerAddress;
     private String customerMobile;
+
+
+
+    @OneToMany(mappedBy = "customer", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<OrderEntity> orders = new ArrayList<>();
+
+
+
+
+
+
+
+
+
+
+
+
+    //    @OneToMany(mappedBy = "customer", cascade = CascadeType.ALL)
+//    private List<ItemEntity> items;
+
+
 }

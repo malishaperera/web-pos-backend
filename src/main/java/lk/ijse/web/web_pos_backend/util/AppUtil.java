@@ -12,6 +12,7 @@ public class AppUtil {
     private static ItemService itemService;
 
 
+    //Customer ID Generate
     public static String generateNextCustomerId(String lastCustomerId) {
         if (lastCustomerId != null && lastCustomerId.startsWith("CUS-")) {
             int lastIdNumber = Integer.parseInt(lastCustomerId.substring(4));
@@ -20,17 +21,31 @@ public class AppUtil {
         return "CUS-001";
     }
 
-
+    //Item ID Generate
     public static String generateNextItemId(String lastItemId) {
-        if (lastItemId != null && lastItemId.startsWith("ItE-")) {
+        if (lastItemId != null && lastItemId.startsWith("ITE-")) {
             int lastIdNumber = Integer.parseInt(lastItemId.substring(4));
-            return String.format("ItE-%03d", lastIdNumber + 1);
+            return String.format("ITE-%03d", lastIdNumber + 1);
         }
-        return "ItE-001";
+        return "ITE-001";
     }
 
-    public static String toBase64ProfilePic(String profilePic){
-        //used to java Base64 class, and profilePic convert Base64 encode
-        return Base64.getEncoder().encodeToString(profilePic.getBytes());
+    //Order ID Generate
+    public static String generateNextOrderId(String lastOrderId) {
+        if (lastOrderId != null && lastOrderId.startsWith("ORD-")) {
+            int lastIdNumber = Integer.parseInt(lastOrderId.substring(4));
+            return String.format("ORD-%03d", lastOrderId + 1);
+        }
+        return "ORD-001";
     }
+
+//    public static String toBase64ProfilePic(String profilePic){
+//        //used to java Base64 class, and profilePic convert Base64 encode
+//        return Base64.getEncoder().encodeToString(profilePic.getBytes());
+//    }
+    
+public static String toBase64ProfilePic(byte[] profilePic) {
+    // Convert image bytes to Base64 string
+    return Base64.getEncoder().encodeToString(profilePic);
+}
 }

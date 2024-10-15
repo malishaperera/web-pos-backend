@@ -23,10 +23,10 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class ItemServiceImpl implements ItemService {
 
-    @Autowired
+//    @Autowired
     private final ItemDao itemDao;
 
-    @Autowired
+//    @Autowired
     private final Mapping mapping;
 
     @Override
