@@ -102,6 +102,15 @@ To run the web-based POS backend system on an Apache Tomcat server, follow these
 - Apache Tomcat installed and running on your machine (version 9+ recommended).
 - Java 8 or higher installed.
 
+## Testing with Postman
+**Steps to Test:**
+- Open Postman and create a new Request.
+- Choose the appropriate HTTP method (GET, POST, PUT, DELETE).
+- Enter the API URL (e.g., http://localhost:8080/web_pos_backend/api/v1/customers).
+- For POST/PUT requests, set the Body to raw and select JSON (for customer and order endpoints) or Form Data (for item endpoints).
+- Add the required JSON or form data in the body.
+- Click Send to execute the request and view the response.
+
 ### Steps to Run the Application:
 
 1. **Clone the Repository**
