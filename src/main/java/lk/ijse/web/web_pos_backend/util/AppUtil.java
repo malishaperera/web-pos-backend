@@ -33,19 +33,21 @@ public class AppUtil {
     //Order ID Generate
     public static String generateNextOrderId(String lastOrderId) {
         if (lastOrderId != null && lastOrderId.startsWith("ORD-")) {
-            int lastIdNumber = Integer.parseInt(lastOrderId.substring(4));
-            return String.format("ORD-%03d", lastOrderId + 1);
+            // Extract the numeric part after "ORD-"
+            int lastIdNumber = Integer.parseInt(lastOrderId.substring(4)); // Get the number part
+            return String.format("ORD-%03d", lastIdNumber + 1); // Increment and format
         }
-        return "ORD-001";
+        return "ORD-001"; // Default if no last order ID is present
     }
 
-//    public static String toBase64ProfilePic(String profilePic){
-//        //used to java Base64 class, and profilePic convert Base64 encode
+
+    public static String toBase64ProfilePic(byte[] profilePic) {
+        // Convert image bytes to Base64 string
+        return Base64.getEncoder().encodeToString(profilePic);
+    }
+
+    //public static String toBase64ProfilePic(String profilePic){
+    //     //used to java Base64 class, and profilePic convert Base64 encode
 //        return Base64.getEncoder().encodeToString(profilePic.getBytes());
 //    }
-    
-public static String toBase64ProfilePic(byte[] profilePic) {
-    // Convert image bytes to Base64 string
-    return Base64.getEncoder().encodeToString(profilePic);
-}
 }

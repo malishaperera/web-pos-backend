@@ -5,8 +5,9 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.CreationTimestamp;
 
-import java.security.Timestamp;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -23,13 +24,15 @@ public class OrderEntity {
     @JoinColumn(name = "customerId")
     private CustomerEntity customer;
 
-
+    @CreationTimestamp
     private Timestamp orderTimestamp;
+
 
 
     // OneToMany relationship with OrderDetailsEntity
     @OneToMany(mappedBy = "order", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<OrderDetailsEntity> orderDetails = new ArrayList<>();
+}
 
 
 
@@ -52,4 +55,3 @@ public class OrderEntity {
 //            inverseJoinColumns = @JoinColumn(name = "itemId")
 //    )
 //    private List<ItemEntity> items = new ArrayList<>();
-}

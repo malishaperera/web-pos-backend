@@ -22,23 +22,9 @@ public class CustomerEntity implements SuperEntity{
     private String customerMobile;
 
 
-
     @OneToMany(mappedBy = "customer", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<OrderEntity> orders = new ArrayList<>();
-
-
-
-
-
-
-
-
-
-
-
-
-    //    @OneToMany(mappedBy = "customer", cascade = CascadeType.ALL)
-//    private List<ItemEntity> items;
-
-
 }
+
+//    @OneToMany(mappedBy = "customer", cascade = CascadeType.ALL)
+//    private List<ItemEntity> items;

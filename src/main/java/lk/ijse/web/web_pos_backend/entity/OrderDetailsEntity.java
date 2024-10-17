@@ -5,6 +5,10 @@ import lk.ijse.web.web_pos_backend.embedded.OrderDetailsPK;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.CreationTimestamp;
+import java.sql.Timestamp;
+
+
 
 @Data
 @AllArgsConstructor
@@ -31,5 +35,8 @@ public class OrderDetailsEntity {
     private double itemPrice;
 
     private double totalPrice;
+
+    private int discount;
+
 
 }
